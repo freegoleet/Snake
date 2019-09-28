@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System;
+﻿using UnityEngine;
 
 public class Snake : MonoBehaviour {
     LinkedList tailList = new LinkedList();
-    
 
     bool ate = false;
     Vector2 dir = Vector2.right;
@@ -29,6 +24,7 @@ public class Snake : MonoBehaviour {
             Move();
         }
 
+        // Todo: Change to Case system.
         if (Input.GetKey(KeyCode.RightArrow) && (dir != -Vector2.right)) dir = Vector2.right;
         else if (Input.GetKey(KeyCode.LeftArrow) && (dir != Vector2.right)) dir = -Vector2.right;
         else if (Input.GetKey(KeyCode.UpArrow) && (dir != -Vector2.up)) dir = Vector2.up;
@@ -39,18 +35,14 @@ public class Snake : MonoBehaviour {
         currentHeadPosition = transform.position;
         transform.Translate(dir);
 
-
         if (ate == true) {
             GameObject newTailNode = (GameObject)Instantiate(tailPrefab, currentHeadPosition, Quaternion.identity);
 
             tailList.Add(1, newTailNode);
             ate = false;
-            
         }
 
         if (tailList.Count > 1) {
-            
-
             tailList.Last().transform.position = currentHeadPosition;
 
             tailList.Add(1, tailList.Last());
@@ -67,8 +59,8 @@ public class Snake : MonoBehaviour {
             Score += 1;
         }
 
-        if (collision.gameObject.tag == "Wall") {
-            snakeUpdateSpeed = 1000.0f; // Setting it to 0 seems to have no effect.
+        if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Tail") { // Death sentence
+            snakeUpdateSpeed = 1000.0f; // Setting it to 0 seems to have no effect. Currently just a fake.
             Debug.Log("death embraces you");
 
             SpawnFood.spawnFood = false;

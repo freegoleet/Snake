@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LinkedList {
@@ -82,28 +80,6 @@ public class LinkedList {
         }
 
         return current.SnakeNode;
-    }
-
-    public int MoveList() {
-        Node current = head;
-        Node nextNode = head.Next;
-
-        nextNode = current;
-        current = current.Next;
-        current = nextNode;
-        Console.WriteLine("c");
-
-
-        //while (current != null) {
-        //nextNode = current;
-        //Console.WriteLine("Got past first.");
-        //current.Next = current;
-        //Console.WriteLine("Got past second.");
-        //current = nextNode;
-        //Console.WriteLine("Got past third.");
-        //}
-
-        return 0;
     }
 
     public GameObject Add(GameObject o) {

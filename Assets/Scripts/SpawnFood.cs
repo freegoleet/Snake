@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnFood : MonoBehaviour {
@@ -15,18 +14,18 @@ public class SpawnFood : MonoBehaviour {
     [SerializeField]
     public static float spawnRepeatRate = 10f;
 
-    private IEnumerator Countdown2() {
-        while (spawnFood == true) {
-            yield return new WaitForSeconds(2); // Wait 2 seconds
+    private IEnumerator FoodTimer() {
+        while (spawnFood == true) { // Todo: The timer/wait that started before Death should not finish.
+            yield return new WaitForSeconds(2);
             Spawn();
         }
     }
 
     private void Start() {
-        StartCoroutine(Countdown2());
+        StartCoroutine(FoodTimer());
     }
 
-    void Spawn() {
+    void Spawn() { // Todo: Food should not be able to spawn inside the snake.
         int x = (int)Random.Range(borderLeft.position.x + 1, borderRight.position.x - 1);
 
         int y = (int)Random.Range(borderBottom.position.y + 1, borderTop.position.y - 1);
