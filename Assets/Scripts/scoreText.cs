@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-public class scoreText : MonoBehaviour
+public class ScoreText : MonoBehaviour
 {
     public Text score;
 

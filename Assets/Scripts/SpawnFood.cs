@@ -1,21 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class SpawnFood : MonoBehaviour {
     public GameObject foodPrefab;
-
     public Transform borderTop;
     public Transform borderBottom;
     public Transform borderRight;
     public Transform borderLeft;
-
-    public static bool spawnFood = true;
+    public static List<GameObject> foodList = new List<GameObject>();
 
     [SerializeField]
     public static float spawnRepeatRate = 10f;
 
     private IEnumerator FoodTimer() {
-        while (spawnFood == true) { // Todo: The timer/wait that started before Death should not finish.
+        while (Snake.Alive == true) { // Todo: The timer/wait that started before Death should not finish.
             yield return new WaitForSeconds(2);
             Spawn();
         }
@@ -30,6 +29,7 @@ public class SpawnFood : MonoBehaviour {
 
         int y = (int)Random.Range(borderBottom.position.y + 1, borderTop.position.y - 1);
 
-        Instantiate(foodPrefab, new Vector2(x, y), Quaternion.identity);
+        GameObject newFood = Instantiate(foodPrefab, new Vector2(x, y), Quaternion.identity);
+        foodList.Add(newFood);
     }
 }

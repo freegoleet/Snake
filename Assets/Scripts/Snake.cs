@@ -1,21 +1,27 @@
-﻿using UnityEngine;
+﻿using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class Snake : MonoBehaviour {
     LinkedList tailList = new LinkedList();
-
-    bool ate = false;
-    Vector2 dir = Vector2.right;
     public GameObject tailPrefab;
-    public static int Score;
-
+    Vector2 dir = Vector2.right;
     Vector2 currentHeadPosition;
     Vector2 tailLastPosition;
+
+    bool ate = false;
+    public static int Score;
+    public static bool Alive = true;
 
     [SerializeField]
     public float snakeUpdateSpeed = 0.1f;
 
     void Start() {
         tailList.Add(GameObject.Find("Head"));
+    }
+
+    void OnEnable() {
+        Alive = true;
+        Score = 0;
     }
 
     void Update() {
@@ -36,7 +42,7 @@ public class Snake : MonoBehaviour {
         transform.Translate(dir);
 
         if (ate == true) {
-            GameObject newTailNode = (GameObject)Instantiate(tailPrefab, currentHeadPosition, Quaternion.identity);
+            GameObject newTailNode = Instantiate(tailPrefab, currentHeadPosition, Quaternion.identity);
 
             tailList.Add(1, newTailNode);
             ate = false;
@@ -60,10 +66,10 @@ public class Snake : MonoBehaviour {
         }
 
         if (collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Tail") { // Death sentence
-            snakeUpdateSpeed = 1000.0f; // Setting it to 0 seems to have no effect. Currently just a fake.
+            snakeUpdateSpeed = 1000.0f; // Todo: Make it stop for real.
             Debug.Log("death embraces you");
 
-            SpawnFood.spawnFood = false;
+            Alive = false;
         }
     }
 }
